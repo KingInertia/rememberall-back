@@ -22,16 +22,10 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 
-from users.views import UserViewSet
-
-router = routers.DefaultRouter()
-router.register(r'users', UserViewSet)
-
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path(('api/v1/'), include(router.urls)),
     path('api/v1/auth/', include('djoser.urls')),
-
+    path('api/v1/', include('users.urls')),
     path('api/v1/auth/jwt/create/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/v1/auth/jwt/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]

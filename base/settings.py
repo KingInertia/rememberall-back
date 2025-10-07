@@ -157,8 +157,8 @@ DJOSER = {
         'USE_TLS': env.bool("EMAIL_USE_TLS"),
     },
     'SERIALIZERS': {
-        'user_detail': 'apps.users.serializers.UserSerializer', 
-        'current_user': 'apps.users.serializers.UserSerializer', 
-        'user_list': 'apps.users.serializers.UserListSerializer',
+        'user_detail': 'users.serializers.UserSerializer', 
+        'current_user': 'users.serializers.UserSerializer', 
+        'user_list': 'users.serializers.UserListSerializer',
         }, 
 }
