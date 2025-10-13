@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'djoser',
     'corsheaders',
     'users.apps.UsersConfig',
+    'notes.apps.NotesConfig',
 ]
 
 MIDDLEWARE = [
