@@ -27,6 +27,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/auth/', include('djoser.urls')),
     path('api/v1/', include('users.urls')),
+    path('api/v1/', include('notes.urls')),
     path('api/v1/auth/jwt/create/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/v1/auth/jwt/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/v1/auth/jwt/verify/', TokenVerifyView.as_view(), name='token_verify'),

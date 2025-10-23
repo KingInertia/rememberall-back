@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+from datetime import timedelta
 from pathlib import Path
 import os
 import environ
@@ -160,10 +161,15 @@ DJOSER = {
         'USE_TLS': env.bool("EMAIL_USE_TLS"),
     },
     'SERIALIZERS': {
-        'user_detail': 'users.serializers.UserSerializer', 
+        'user_detail': 'users.serializers.PublicUserSerializer', 
         'current_user': 'users.serializers.UserSerializer', 
-        'user_list': 'users.serializers.UserListSerializer',
+        'user_list': 'users.serializers.PublicUserSerializer',
         }, 
 }
 
 CORS_ALLOWED_ORIGINS = env('CORS_ALLOWED_ORIGINS').split(",")
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
+    'ROTATE_REFRESH_TOKENS': True,
+}
