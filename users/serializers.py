@@ -9,14 +9,14 @@ class UserPublicSerializer(serializers.ModelSerializer):
         fields = ('id', 'username')
 
 class UserSerializer(serializers.ModelSerializer):
-    recent_notes = serializers.SerializerMethodField()
+    notes_history = serializers.SerializerMethodField()
 
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'recent_notes']
+        fields = ['id', 'username', 'email', 'notes_history']
 
-    def get_recent_notes(self, obj):
+    def get_notes_history(self, obj):
         history = NoteHistory.objects.filter(user=obj).select_related('note')
         return [
             {

@@ -41,12 +41,12 @@ class NoteViewSet(viewsets.ModelViewSet):
             status_code = status.HTTP_201_CREATED if created else status.HTTP_200_OK
             return Response(serializer.data, status=status_code)
 
-    def retrieve(self, request):
-        note = self.get_object()
-        user = request.user
-        update_note_history(user, note)
-        serializer = self.get_serializer(note)
-        return Response(serializer.data)
+def retrieve(self, request, pk=None):
+    note = self.get_object()
+    user = request.user
+    update_note_history(user, note)
+    serializer = self.get_serializer(note)
+    return Response(serializer.data)
 
 class NoteImageViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]

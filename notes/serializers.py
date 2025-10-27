@@ -13,7 +13,7 @@ class NoteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Note
-        fields = ('id', 'title', 'content', 'user', 'links_out', 'links_in', 'images', 'created', 'modified')
+        fields = ('id', 'title', 'content', 'links_out', 'links_in', 'images')
 
 
 class NoteListSerializer(serializers.ModelSerializer):
