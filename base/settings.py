@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+from datetime import timedelta
 from pathlib import Path
 import os
 import environ
@@ -34,6 +35,8 @@ DEBUG = env.bool('DEBUG')
 
 ALLOWED_HOSTS = env("ALLOWED_HOSTS").split(",")
 
+AUTH_USER_MODEL = 'users.User'
+
 
 # Application definition
 
@@ -44,9 +47,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_extensions',
+    'rest_framework',
+    'rest_framework_simplejwt',
+    'djoser',
+    'corsheaders',
+    'users.apps.UsersConfig',
+    'notes.apps.NotesConfig',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -131,3 +142,34 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+DJOSER = {
+    'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',
+    'USERNAME_RESET_CONFIRM_URL': '#/username/reset/confirm/{uid}/{token}',
+    'EMAIL': {
+        'FROM_EMAIL': env("DEFAULT_FROM_EMAIL"),
+        'SMTP_HOST': env("EMAIL_HOST"),
+        'SMTP_PORT': 587,
+        'SMTP_USER': env("EMAIL_HOST_USER"),
+        'SMTP_PASSWORD': env("EMAIL_HOST_PASSWORD"),
+        'USE_TLS': env.bool("EMAIL_USE_TLS"),
+    },
+    'SERIALIZERS': {
+        'user_detail': 'users.serializers.PublicUserSerializer', 
+        'current_user': 'users.serializers.UserSerializer', 
+        'user_list': 'users.serializers.PublicUserSerializer',
+        }, 
+}
+
+CORS_ALLOWED_ORIGINS = env('CORS_ALLOWED_ORIGINS').split(",")
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
+    'ROTATE_REFRESH_TOKENS': True,
+}
